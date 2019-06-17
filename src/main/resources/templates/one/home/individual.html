@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+	<head lang="en">
+		<meta charset="UTF-8">
+		<title>个人</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+		<link rel="stylesheet" href="../AmazeUI-2.4.2/assets/css/amazeui.min.css" />
+		<link href="../css/individual.css" rel="stylesheet" type="text/css">
+		<script src="../AmazeUI-2.4.2/assets/js/jquery.min.js"></script>
+		<script src="../AmazeUI-2.4.2/assets/js/amazeui.min.js"></script>
+
+	</head>
+<script>
+	$(function () {
+		/*var a1 =sessionStorage.getItem('session1');//获取session中的数据
+		var a2 =sessionStorage.getItem('session2');//获取session中的数据
+		var a3 =sessionStorage.getItem('session3');//获取session中的数据
+		var a4 =sessionStorage.getItem('session4');//获取session中的数据
+		var a5 =sessionStorage.getItem('session5');//获取session中的数据
+		$('#individual').text(a1+"的个人中心信息");
+		$('#email').attr('placeholder',a2);
+		$('#phone').attr('placeholder',a3);
+		$('#question').attr('placeholder',a4);
+		$('#answer').attr('placeholder',a5);*/
+		$.ajax({
+			//几个参数需要注意一下
+			type: "POST",//方法类型
+			dataType: "json",//预期服务器返回的数据类型
+			url: "/portal/user/get_inforamtion.do" ,
+			success: function (result) {
+				switch (result.status) {
+					case 10:alert("用户未登录，无法获取当前用户信息");
+						break;
+					default:
+				}
+				$('#individual').text(result.data.username+"的个人中心信息");
+				$('#email').attr('placeholder',result.data.email);
+				$('#phone').attr('placeholder',result.data.phone);
+				$('#question').attr('placeholder',result.data.question);
+				$('#answer').attr('placeholder',result.data.answer);
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	});
+
+</script>
+	<body>
+
+		<div class="login-boxtitle">
+			<a href="home/demo.html"><img alt="" src="../images/logobig.png" /></a>
+		</div>
+
+		<div class="res-banner">
+			<div class="res-main">
+				<div class="login-banner-bg"><span></span></div>
+				<div class="login-box">
+
+						<div class="am-tabs" id="doc-my-tabs">
+							<ul class="am-tabs-nav am-nav am-nav-tabs am-nav-justify">
+								<li class="am-active"><a href="" id="individual">个人中心信息</a></li>
+							
+							</ul>
+
+							<div class="am-tabs-bd">
+								<div class="am-tab-panel am-active">
+				<form  id="loginForm" >
+
+							   <div class="user-email">
+										<label for="email"><i class="am-icon-envelope-o"></i></label>
+										<input type="email" name="email" id="email" placeholder="">
+                 </div>										
+                
+                  <div class="user-pass">
+								    <label for="email"><i class="am-icon-lock"></i></label>
+								    <input type="tel" name="phone" id="phone" placeholder="">
+                 </div>	
+                 <div class="user-pass">
+								    <label for="email"><i class="am-icon-lock"></i></label>
+								    <input type="text" name="question" id="question" placeholder="">
+                </div>	
+                       <div class="user-pass">
+								    <label for="email"><i class="am-icon-lock"></i></label>
+								    <input type="text" name="answer" id="answer" placeholder="">
+                 </div>	
+                 
+                
+                 </form>
+                 
+								 
+										<div class="am-cf">
+											<input type="submit" name=""  onclick="s1();"  value="修改" class="am-btn am-btn-primary am-btn-sm am-fl">
+											<input  type="button" name="Submit" onclick="history.back(-1);"  value="返回" class="am-btn am-btn-primary am-btn-sm am-fl">
+										</div>
+									<script>
+
+										function s1() {
+											$.ajax({
+												//几个参数需要注意一下
+												type: "POST",//方法类型
+												dataType: "json",//预期服务器返回的数据类型
+												url: "/portal/user/update_information.do" ,//url
+												data: $('#loginForm').serialize(),
+												success: function (result) {
+													switch (result.status) {
+														case 0 :alert("更新个人信息成功");
+															break;
+														case 1 :alert("用户未登录");
+															break;
+													}
+													window.history.back(-1);
+												},
+												error : function() {
+													alert("异常！");
+												}
+											});
+										}
+									</script>
+								</div>
+
+							</div>
+						</div>
+
+				</div>
+			</div>
+			
+					<div class="footer ">
+						<div class="footer-hd ">
+							<p>
+								<a href="# ">恒望科技</a>
+								<b>|</b>
+								<a href="# ">商城首页</a>
+								<b>|</b>
+								<a href="# ">支付宝</a>
+								<b>|</b>
+								<a href="# ">物流</a>
+							</p>
+						</div>
+						<div class="footer-bd ">
+							<p>
+								<a href="# ">关于恒望</a>
+								<a href="# ">合作伙伴</a>
+								<a href="# ">联系我们</a>
+								<a href="# ">网站地图</a>
+								<em>© 2015-2025 Hengwang.com 版权所有</em>
+							</p>
+						</div>
+					</div>
+		</div>
+	</body>
+
+</html>
